@@ -1,0 +1,44 @@
+(function(console){
+
+    console.save = function(data, filename){
+
+        if(!data) {
+            console.error('Console.save: No data')
+            return;
+        }
+
+        if(!filename) filename = Math.floor(Date.now() / 1000)+'_page.html'
+
+        if(typeof data === "object"){
+            data = JSON.stringify(unescape(encodeURIComponent(data), undefined, 4)
+        }
+
+        var blob = new Blob([data], {type: 'text/json'}),
+            e    = document.createEvent('MouseEvents'),
+            a    = document.createElement('a')
+
+        a.download = filename
+        a.href = window.URL.createObjectURL(blob)
+        a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+        e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+        a.dispatchEvent(e)
+    }
+})(console)
+var int=setInterval(function(){
+$('div[ng-click="navigatePageRight()"]').trigger('click');
+setTimeout(function(){ console.save($("body").find("iframe").contents().find("html").html()); }, 3000);
+},4000);
+
+
+navigatePageRight()
+
+$('div[ng-click="navigatePageRight()"]').trigger('click');
+console.log($("body").find("iframe").contents().find("html").html())
+$.post("http://localhost/content/index.php",{data:x},function(ret){
+console.log(ret);
+});
+
+
+PageContainer1
+
+console.log($("body").find("iframe"))
